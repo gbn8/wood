@@ -39,4 +39,11 @@ fn run_prompt() {
     }
 }
 
-fn run(source: &[u8]) {}
+fn run(source: &[u8]) {
+    let scanner = Scanner { source };
+    let tokens = scanner.scan_tokens();
+
+    for token in tokens {
+        println!("{:?}", token);
+    }
+}
