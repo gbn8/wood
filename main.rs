@@ -16,12 +16,8 @@ pub fn main(){
 }
 
 fn run_file(path: &String) -> io::Result<()>{
-    let f = File::open(path)?;
-    let mut reader = BufReader::new(f);
-    let mut buf = Vec::new();
-    reader.read_to_end(&mut buf);
-
-    run(&buf);
+    let buf = std::fs::read_to_string(path)?;
+    run(buf.as_str());
     Ok(())
 }
 
@@ -32,14 +28,14 @@ fn run_prompt() {
             if line.is_empty() {
                 break;
             }
-            run(&line.as_bytes());
+            run(&line.as_str());
         } else {
             break;
         }
     }
 }
 
-fn run(source: &[u8]) {
+fn run(source: &str) {
     let scanner = Scanner { source };
     let tokens = scanner.scan_tokens();
 
